@@ -3,6 +3,7 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Resume from "@/components/Resume";
+import Media from "@/components/Media";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <Skills />
       <Projects />
       <Resume />
+      <Media />
       <Contact />
     </>
   );

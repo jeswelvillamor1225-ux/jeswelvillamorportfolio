@@ -7,7 +7,8 @@ const LINKS = [
   { href: "#skills",   label: "Skills",   n: "02" },
   { href: "#projects", label: "Projects", n: "03" },
   { href: "#resume",   label: "Resume",   n: "04" },
-  { href: "#contact",  label: "Contact",  n: "05" },
+  { href: "#media",    label: "Media",    n: "05" },
+  { href: "#contact",  label: "Contact",  n: "06" },
 ];
 
 export default function Navbar() {
