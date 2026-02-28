@@ -6,7 +6,8 @@ const LINKS = [
   { href: "#about",    label: "About",    n: "01" },
   { href: "#skills",   label: "Skills",   n: "02" },
   { href: "#projects", label: "Projects", n: "03" },
-  { href: "#contact",  label: "Contact",  n: "04" },
+  { href: "#resume",   label: "Resume",   n: "04" },
+  { href: "#contact",  label: "Contact",  n: "05" },
 ];
 
 export default function Navbar() {

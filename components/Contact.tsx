@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useReveal } from "./useReveal";
 
 const SOCIALS = [
-  { label: "Email",    value: "jeswel.villamor@example.com",   href: "mailto:jeswel.villamor@example.com" },
+  { label: "Email",    value: "<JeswelVillamor1225></JeswelVillamor1225>gmail.com",   href: "mailto:JeswelVillamor1225@gmail.com" },
   { label: "LinkedIn", value: "/in/jeswel-villamor",     href: "#" },
   { label: "GitHub",   value: "@jeswel-villamor",       href: "#" },
-  { label: "Location", value: "Philippines",  href: null },
+  { label: "Location", value: "Libo Mohon, Talisay City Cebu",  href: null },
 ];
 
 export default function Contact() {

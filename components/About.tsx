@@ -1,5 +1,6 @@
 "use client";
 import { useReveal } from "./useReveal";
+import Image from "next/image";
 
 const STACK = [
   "TypeScript / JS", "React / Next.js",
@@ -66,10 +67,12 @@ export default function About() {
               <div className="corner-tl" />
               <div className="corner-br" />
               <div className="scan-beam" />
-              <div style={{ textAlign: "center" }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "5rem", fontWeight: 900, color: "var(--border)", letterSpacing: "-0.05em" }}>JV</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: ".55rem", color: "var(--muted)", letterSpacing: ".2em", marginTop: ".4rem" }}>REPLACE WITH PHOTO</div>
-              </div>
+              <Image 
+                src="/jeswel-photo.jpg" 
+                alt="Jeswel Bacolod Villamor" 
+                fill 
+                style={{ objectFit: "cover" }}
+              />
             </div>
             {/* Shadow offset */}
             <div style={{
