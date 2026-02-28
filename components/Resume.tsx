@@ -312,7 +312,7 @@ export default function Resume() {
 
           {/* Download Resume Button */}
           <div style={{ textAlign: "center", marginTop: "3rem" }}>
-            <a href="/resume.pdf" download style={{
+            <a href="/Jeswel_Villamor_Modern_IT_Resume.pdf" download style={{
               background: "var(--acid)", color: "#000",
               fontFamily: "var(--font-mono)", fontSize: ".7rem", fontWeight: 700,
               letterSpacing: ".2em", textTransform: "uppercase",

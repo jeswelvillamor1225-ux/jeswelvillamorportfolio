@@ -68,7 +68,7 @@ export default function About() {
               <div className="corner-br" />
               <div className="scan-beam" />
               <Image 
-                src="/jeswel-photo.jpg" 
+                src="/jeswel.jpg" 
                 alt="Jeswel Bacolod Villamor" 
                 fill 
                 style={{ objectFit: "cover" }}

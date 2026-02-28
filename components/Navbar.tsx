@@ -68,7 +68,7 @@ export default function Navbar() {
 
         {/* Resume btn */}
         <a
-          href="/resume.pdf"
+          href="/Jeswel_Villamor_Modern_IT_Resume.pdf"
           className="hidden-mobile"
           style={{
             fontFamily: "var(--font-mono)", fontSize: ".62rem",
