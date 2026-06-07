@@ -61,7 +61,7 @@ body {
 }
 
 /* ── Scanlines ── */
-.scanlines::after {
+.crt-active .scanlines::after {
   content: '';
   position: absolute; inset: 0;
   background: repeating-linear-gradient(

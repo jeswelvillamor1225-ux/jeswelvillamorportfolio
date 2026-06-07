@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
+import { playClickSound, playKeySound } from "./sound";
+import SystemStatus from "./SystemStatus";
 
 const ROLES = [
   "Full-Stack Developer",
@@ -23,11 +25,13 @@ function useTypewriter(phrases: string[]) {
       if (!deleting && charIdx < phrase.length) {
         setText(phrase.slice(0, charIdx + 1));
         setCharIdx(c => c + 1);
+        playKeySound();
       } else if (!deleting && charIdx === phrase.length) {
         setDeleting(true);
       } else if (deleting && charIdx > 0) {
         setText(phrase.slice(0, charIdx - 1));
         setCharIdx(c => c - 1);
+        playKeySound();
       } else {
         setDeleting(false);
         setPhraseIdx(i => (i + 1) % phrases.length);
@@ -55,7 +59,7 @@ const S: Record<string, React.CSSProperties> = {
   sub: { fontFamily: "var(--font-mono)", fontSize: ".78rem", letterSpacing: ".18em", color: "var(--muted)", marginBottom: ".6rem" },
   name: {
     fontFamily: "var(--font-display)",
-    fontSize: "clamp(4.5rem,12vw,9.5rem)",
+    fontSize: "clamp(3.5rem,10vw,8rem)",
     fontWeight: 900,
     lineHeight: .88,
     color: "#fff",
@@ -168,23 +172,33 @@ export default function Hero() {
             </span>
           </div>
 
-          <p style={S.desc}>
-            // Crafting innovative digital solutions with precision.<br />
-            // Passionate about clean code and user-centric design.<br />
-            // Transforming ideas into powerful, scalable applications.
-          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "3rem", alignItems: "start", marginBottom: "3rem" }} className="hero-content-grid">
+            <div>
+              <p style={S.desc}>
+                // Crafting innovative digital solutions with precision.<br />
+                // Passionate about clean code and user-centric design.<br />
+                // Transforming ideas into powerful, scalable applications.
+              </p>
 
-          <div style={S.ctaRow}>
-            <a href="#projects" style={S.btnPrimary}
-              onMouseEnter={e => ((e.target as HTMLElement).style.background = "#fff")}
-              onMouseLeave={e => ((e.target as HTMLElement).style.background = "var(--acid)")}>
-              View Work →
-            </a>
-            <a href="#contact" style={S.btnSec}
-              onMouseEnter={e => { const el = e.target as HTMLElement; el.style.borderColor = "var(--acid)"; el.style.color = "var(--acid)"; }}
-              onMouseLeave={e => { const el = e.target as HTMLElement; el.style.borderColor = "var(--border)"; el.style.color = "var(--text)"; }}>
-              Get In Touch
-            </a>
+              <div style={S.ctaRow}>
+                <a href="#projects" style={S.btnPrimary}
+                  onClick={() => playClickSound(1000, 0.05)}
+                  onMouseEnter={e => { (e.target as HTMLElement).style.background = "#fff"; playClickSound(1400, 0.005); }}
+                  onMouseLeave={e => ((e.target as HTMLElement).style.background = "var(--acid)")}>
+                  View Work →
+                </a>
+                <a href="#contact" style={S.btnSec}
+                  onClick={() => playClickSound(1000, 0.05)}
+                  onMouseEnter={e => { const el = e.target as HTMLElement; el.style.borderColor = "var(--acid)"; el.style.color = "var(--acid)"; playClickSound(1400, 0.005); }}
+                  onMouseLeave={e => { const el = e.target as HTMLElement; el.style.borderColor = "var(--border)"; el.style.color = "var(--text)"; }}>
+                  Get In Touch
+                </a>
+              </div>
+            </div>
+
+            <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }} className="hero-status-widget">
+              <SystemStatus />
+            </div>
           </div>
 
           <div style={S.statsRow}>
@@ -206,6 +220,13 @@ export default function Hero() {
         <span style={{ fontFamily: "var(--font-mono)", fontSize: ".55rem", letterSpacing: ".25em", color: "var(--muted)" }}>SCROLL</span>
         <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, var(--muted), transparent)" }} />
       </div>
+
+      <style>{`
+        @media(max-width:900px){
+          .hero-content-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+          .hero-status-widget { justify-content: flex-start !important; }
+        }
+      `}</style>
     </section>
   );
 }

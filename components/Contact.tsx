@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useReveal } from "./useReveal";
 
 const SOCIALS = [
-  { label: "Email",    value: "<JeswelVillamor1225></JeswelVillamor1225>gmail.com",   href: "mailto:JeswelVillamor1225@gmail.com" },
+  { label: "Email",    value: "JeswelVillamor1225@gmail.com",   href: "mailto:JeswelVillamor1225@gmail.com" },
   { label: "LinkedIn", value: "/in/jeswel-villamor",     href: "#" },
   { label: "GitHub",   value: "@jeswel-villamor",       href: "#" },
   { label: "Location", value: "Libo Mohon, Talisay City Cebu",  href: null },
@@ -12,11 +12,34 @@ const SOCIALS = [
 export default function Contact() {
   const { ref, visible } = useReveal();
   const [form, setForm]  = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
   const [sent, setSent]  = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSending(true);
+    setLogs([]);
+
+    const logMessages = [
+      `[SYS] Initializing SMTP connection to mail server...`,
+      `[SYS] Handshake established with SSL/TLS protocol.`,
+      `[SYS] Encrypting message payload (AES-256-GCM)...`,
+      `[MSG] Sender IP resolved. Mailbox verified: ${form.email}`,
+      `[MSG] Packet payload size: ${JSON.stringify(form).length} bytes.`,
+      `[SYS] Routing packet through secure regional relays...`,
+      `[SYS] Executing transmission sequence...`,
+      `[SUCCESS] Message successfully delivered to Jeswel's mailbox. Status: 200 OK.`,
+    ];
+
+    for (let i = 0; i < logMessages.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 400 + Math.random() * 300));
+      setLogs((prev) => [...prev, logMessages[i]]);
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 600));
     setSent(true);
+    setSending(false);
   };
 
   const inputStyle: React.CSSProperties = {
@@ -77,7 +100,32 @@ export default function Contact() {
 
             {/* Right: form */}
             <div>
-              {sent ? (
+              {sending ? (
+                <div style={{
+                  border: "1px solid var(--acid)",
+                  background: "rgba(6, 10, 18, 0.95)",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: ".65rem",
+                  padding: "2rem",
+                  minHeight: "280px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between"
+                }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: ".4rem", textAlign: "left" }}>
+                    <div style={{ color: "var(--acid)", borderBottom: "1px solid var(--border)", paddingBottom: ".5rem", marginBottom: ".5rem", display: "flex", justifyContent: "space-between" }}>
+                      <span>MESSAGING SHELL v1.0</span>
+                      <span className="blink">● TRANSMITTING</span>
+                    </div>
+                    {logs.map((log, idx) => (
+                      <div key={idx} style={{ color: log.includes("SUCCESS") ? "var(--acid)" : log.includes("MSG") ? "var(--cyan)" : "var(--text)", minHeight: "1.2rem" }}>
+                        {log}
+                      </div>
+                    ))}
+                    <div className="blink" style={{ color: "var(--acid)", marginTop: "0.2rem" }}>▋</div>
+                  </div>
+                </div>
+              ) : sent ? (
                 <div style={{
                   border: "1px solid rgba(200,255,87,.25)",
                   background: "rgba(200,255,87,.04)",
@@ -85,7 +133,24 @@ export default function Contact() {
                 }}>
                   <div style={{ fontFamily: "var(--font-mono)", fontSize: "2.5rem", color: "var(--acid)", marginBottom: "1rem" }}>✓</div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700, color: "#fff", marginBottom: ".5rem" }}>Message Received</div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: ".65rem", color: "var(--muted)" }}>I'll get back to you within 48 hours.</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: ".65rem", color: "var(--muted)", marginBottom: "1.5rem" }}>I'll get back to you within 48 hours.</div>
+                  <button 
+                    onClick={() => { setSent(false); setForm({ name: "", email: "", message: "" }); }}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid var(--border)",
+                      color: "var(--muted)",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: ".6rem",
+                      padding: ".4rem 1rem",
+                      cursor: "none",
+                      transition: "all .2s"
+                    }}
+                    onMouseEnter={e => { const el = e.target as HTMLElement; el.style.borderColor = "var(--acid)"; el.style.color = "var(--acid)"; }}
+                    onMouseLeave={e => { const el = e.target as HTMLElement; el.style.borderColor = "var(--border)"; el.style.color = "var(--muted)"; }}
+                  >
+                    Send Another Message
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
